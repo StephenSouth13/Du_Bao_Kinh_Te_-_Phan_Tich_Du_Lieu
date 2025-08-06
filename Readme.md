@@ -76,4 +76,9 @@ Sinh viên sau khi hoàn thành sẽ:
 
 ## 🧠 Ghi chú cuối
 
-> Học phần mang tính ứng dụng cao, đ
+> Học phần mang tính ứng dụng cao, đòi hỏi sinh viên chủ động nghiên cứu và thực hành. Đây là nền tảng quan trọng để phát triển năng lực nghiên cứu khoa học, lập luận kinh tế và ra quyết định chiến lược trong tương lai.
+
+---
+
+> 📍 *Phát triển bởi Bộ môn Kinh tế Kế hoạch Đầu tư và Phát triển*  
+> 📬 *Liên hệ: [stephensouth1307@gmail.com](mailto:stephensouth1307@gmail.com)*  
