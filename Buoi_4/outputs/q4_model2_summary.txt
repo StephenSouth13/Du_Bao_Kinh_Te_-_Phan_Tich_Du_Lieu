@@ -1,0 +1,30 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:               Sanluong   R-squared:                       0.971
+Model:                            OLS   Adj. R-squared:                  0.952
+Method:                 Least Squares   F-statistic:                     50.88
+Date:                Mon, 08 Sep 2025   Prob (F-statistic):           1.94e-06
+Time:                        17:57:29   Log-Likelihood:                -66.777
+No. Observations:                  16   AIC:                             147.6
+Df Residuals:                       9   BIC:                             153.0
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.0574     36.805     -0.002      0.999     -83.317      83.202
+t             16.2239      3.257      4.981      0.001       8.856      23.592
+CPQC           1.5748      0.647      2.435      0.038       0.112       3.038
+Hoahong      -19.0721     10.929     -1.745      0.115     -43.796       5.651
+Q2            12.8431     15.305      0.839      0.423     -21.779      47.465
+Q3            44.5445     16.438      2.710      0.024       7.360      81.729
+Q4            44.4337     15.614      2.846      0.019       9.112      79.755
+==============================================================================
+Omnibus:                        1.398   Durbin-Watson:                   2.560
+Prob(Omnibus):                  0.497   Jarque-Bera (JB):                0.895
+Skew:                          -0.210   Prob(JB):                        0.639
+Kurtosis:                       1.920   Cond. No.                         573.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
