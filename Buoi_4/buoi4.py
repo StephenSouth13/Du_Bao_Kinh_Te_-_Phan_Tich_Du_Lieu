@@ -1,21 +1,16 @@
-# forecast_suite.py
+# forecast_suite_with_report.py
 # -*- coding: utf-8 -*-
 """
-Full pipeline for the assignment:
-- Q1: Trend regression for Sanluong
-- Q2: Exponential smoothing (best of SES/Holt/HW) for Sanluong; and for Hoahong & CPQC
-- Q3: Multiple regression with CPQC + Hoahong + seasonal dummies; forecast using ETS forecasts of CPQC & Hoahong
-- Q4: Compare Model (2) vs Model (3) via holdout MAPE and recommend
+Pipeline hoàn chỉnh (Q1 -> Q4) + xuất báo cáo PDF & PowerPoint + đồ họa tinh chỉnh.
 
-USAGE (terminal):
-    pip install pandas numpy matplotlib scikit-learn statsmodels pyreadstat
-    python forecast_suite.py --sav "Du bao bang mo hinh nhan qua san luong _ CPQC Hoahong quy.sav" --h 4
+Yêu cầu thư viện:
+pip install pandas numpy matplotlib scikit-learn statsmodels pyreadstat python-pptx pillow fpdf
 
-Outputs:
-- PNG charts for Q1, Q2a, Q2b (each regressor), Q3
-- TXT summaries for regressions
-- CSV forecasts for Q2a (Sanluong) and Q3
-- metrics_summary.csv (MAPE, Adj_R2, AIC)
+Chạy:
+python forecast_suite_with_report.py --sav "Du bao bang mo hinh nhan qua san luong _ CPQC Hoahong quy.sav" --h 4 --outdir outputs
+
+Kết quả:
+- Thư mục outputs/ chứa biểu đồ PNG tinh chỉnh, CSV dự báo, TXT tóm tắt, file report.pdf và report.pptx
 """
 import os
 import argparse
@@ -23,9 +18,18 @@ import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
+from PIL import Image
 
 import statsmodels.api as sm
 from statsmodels.tsa.holtwinters import SimpleExpSmoothing, Holt, ExponentialSmoothing
+
+# report libs
+from fpdf import FPDF
+from pptx import Presentation
+from pptx.util import Inches, Pt
+
+# ------------------ Utility helpers ------------------
 
 def safe_mape(y_true, y_pred):
     y_true = np.asarray(y_true, dtype=float)
@@ -86,40 +90,159 @@ def train_test_split_time(df, test_h=4):
         return df.copy(), df.iloc[0:0].copy()
     return df.iloc[:-test_h].copy(), df.iloc[-test_h:].copy()
 
-def save_fig(path):
+# ------------------ Plot styling helpers ------------------
+
+# Palette & fonts (you can change these)
+PALETTE = {
+    "actual": "#1f77b4",     # blue
+    "fitted": "#ff7f0e",     # orange
+    "forecast": "#2ca02c",   # green
+    "grid": "#e6e6e6"
+}
+TITLE_FONT = {"fontsize": 16, "fontweight": "bold"}
+AXIS_FONT = {"fontsize": 12}
+TICK_FONT_SIZE = 10
+plt.rcParams['font.family'] = 'DejaVu Sans'  # cross-platform default; change if needed
+
+def plot_series_with_forecast(dates, actual, fitted=None, forecast=None, forecast_index=None, title="", ylabel="", outpath=None):
+    plt.figure(figsize=(10,4.5))
+    ax = plt.gca()
+    ax.plot(dates, actual, label="Actual", color=PALETTE["actual"], linewidth=2)
+    if fitted is not None:
+        ax.plot(dates, fitted, label="Fitted", color=PALETTE["fitted"], linewidth=1.8, linestyle='--')
+    if forecast is not None and forecast_index is not None:
+        ax.plot(forecast_index, forecast, label="Forecast", color=PALETTE["forecast"], linewidth=2, marker='o')
+    ax.set_title(title, **TITLE_FONT)
+    ax.set_ylabel(ylabel, **AXIS_FONT)
+    ax.grid(axis='y', color=PALETTE["grid"], linestyle='-', linewidth=0.8)
+    ax.legend()
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+    plt.xticks(rotation=20, fontsize=TICK_FONT_SIZE)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
     plt.tight_layout()
-    plt.savefig(path, dpi=150, bbox_inches="tight")
-    plt.close()
+    if outpath:
+        plt.savefig(outpath, dpi=180)
+        plt.close()
+    else:
+        plt.show()
+
+# ------------------ Read .sav ------------------
 
 def read_sav_any(sav_path):
-    # Try pandas.read_spss (which needs pyreadstat) first, then pyreadstat directly
+    # Force exact file name as requested by user
+    expected_name = "Du bao bang mo hinh nhan qua san luong _ CPQC Hoahong quy.sav"
+    base = os.path.basename(sav_path)
+    if base != expected_name:
+        raise FileNotFoundError(f"File name must be exactly: '{expected_name}'. You provided: '{base}'")
+    # Try to read
     try:
+        # pandas.read_spss requires pyreadstat
         df = pd.read_spss(sav_path)
         return df
-    except Exception as e:
+    except Exception:
         try:
             import pyreadstat
             df, meta = pyreadstat.read_sav(sav_path)
             return df
-        except Exception as e2:
-            raise RuntimeError(
-                f"Không thể đọc file .sav. Cài đặt 'pyreadstat' rồi thử lại.\n"
-                f"Errors:\n- pandas.read_spss: {e}\n- pyreadstat: {e2}"
-            )
+        except Exception as e:
+            raise RuntimeError("Không thể đọc file .sav. Cài đặt pyreadstat rồi thử lại.\n" + str(e))
+
+# ------------------ Reporting helpers ------------------
+
+def make_pdf_report(outdir, summary_text, image_paths, metrics_csv):
+    pdf_path = os.path.join(outdir, "report.pdf")
+    pdf = FPDF(unit="mm", format="A4")
+    pdf.set_auto_page_break(auto=True, margin=12)
+    pdf.add_page()
+    pdf.set_font("Arial", size=16, style="B")
+    pdf.cell(0, 8, "Báo cáo Dự báo Sản lượng", ln=True, align="C")
+    pdf.ln(4)
+    pdf.set_font("Arial", size=11)
+    # summary
+    pdf.multi_cell(0, 6, summary_text)
+    pdf.ln(4)
+    # images
+    for img in image_paths:
+        if img and os.path.exists(img):
+            pdf.add_page()
+            # center image
+            pdf.image(img, x=15, w=180)  # scale to width 180mm
+    # attach metrics table as text
+    pdf.add_page()
+    pdf.set_font("Arial", size=12, style="B")
+    pdf.cell(0, 8, "Metrics Summary (MAPE, Adj_R2, AIC)", ln=True)
+    pdf.set_font("Arial", size=10)
+    if os.path.exists(metrics_csv):
+        dfm = pd.read_csv(metrics_csv)
+        pdf.ln(2)
+        for i, row in dfm.iterrows():
+            line = " | ".join([f"{c}: {row[c]}" for c in dfm.columns])
+            pdf.multi_cell(0, 6, line)
+    pdf.output(pdf_path)
+    return pdf_path
+
+def make_pptx_report(outdir, summary_text, image_paths, metrics_csv):
+    prs = Presentation()
+    # title slide
+    slide = prs.slides.add_slide(prs.slide_layouts[0])
+    title = slide.shapes.title
+    subtitle = slide.placeholders[1]
+    title.text = "Báo cáo Dự báo Sản lượng"
+    subtitle.text = "Tự động sinh bởi forecast_suite_with_report.py"
+    # summary slide
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "Tóm tắt"
+    body = slide.shapes.placeholders[1].text_frame
+    for line in summary_text.splitlines():
+        p = body.add_paragraph()
+        p.text = line
+        p.font.size = Pt(12)
+    # image slides
+    for img in image_paths:
+        if img and os.path.exists(img):
+            slide = prs.slides.add_slide(prs.slide_layouts[5])  # title + content layout
+            slide.shapes.title.text = os.path.basename(img)
+            left = Inches(0.5)
+            top = Inches(1.4)
+            slide.shapes.add_picture(img, left, top, width=Inches(9))
+    # metrics slide
+    slide = prs.slides.add_slide(prs.slide_layouts[5])
+    slide.shapes.title.text = "Metrics Summary"
+    if os.path.exists(metrics_csv):
+        dfm = pd.read_csv(metrics_csv)
+        rows, cols = dfm.shape
+        # add a table
+        x, y, cx, cy = Inches(0.5), Inches(1.2), Inches(9), Inches(0.8 + 0.2*rows)
+        table = slide.shapes.add_table(rows+1, cols, x, y, cx, cy).table
+        # header
+        for j, c in enumerate(dfm.columns):
+            table.cell(0, j).text = c
+        for i in range(rows):
+            for j, c in enumerate(dfm.columns):
+                table.cell(i+1, j).text = str(dfm.iloc[i, j])
+    pptx_path = os.path.join(outdir, "report.pptx")
+    prs.save(pptx_path)
+    return pptx_path
+
+# ------------------ Main pipeline ------------------
 
 def main(args):
     outdir = args.outdir
     os.makedirs(outdir, exist_ok=True)
 
+    # 1) Read data (force exact file name)
     df = read_sav_any(args.sav)
     df.columns = [c.strip() for c in df.columns]
 
+    # 2) detect columns
     y_col = detect_column(df, ["Sanluong", "sanluong", "Output", "Y"], required=True)
     cpqc_col = detect_column(df, ["CPQC", "cpqc"], required=False)
     hh_col = detect_column(df, ["Hoahong", "hoahong", "HoaHong"], required=False)
 
+    # 3) ensure t and quarters
     df, t_col, q_col = ensure_trend_and_quarter(df)
 
+    # 4) build model_df
     model_df = df[[y_col, t_col]].copy()
     if cpqc_col is not None:
         model_df["CPQC"] = df[cpqc_col]
@@ -128,31 +251,27 @@ def main(args):
     for q in [2,3,4]:
         model_df[f"Q{q}"] = df[f"Q{q}"]
 
-    # Create quarterly DateTimeIndex for plotting (display only)
+    # create datetime index for plotting (quarterly)
     periods = len(model_df)
     idx = pd.period_range(start=pd.Period("2000Q1", freq="Q"), periods=periods).to_timestamp(how="end")
     model_df.index = idx
 
-    # ---- Q1: Trend regression ----
+    # ---------- Q1: Trend regression ----------
     X1 = sm.add_constant(model_df[[t_col]])
     y = model_df[y_col].astype(float)
     ols1 = sm.OLS(y, X1).fit()
     model_df["yhat_q1"] = ols1.predict(X1)
     mape_q1 = safe_mape(y, model_df["yhat_q1"])
 
-    plt.figure()
-    plt.plot(model_df.index, y, label="Actual")
-    plt.plot(model_df.index, model_df["yhat_q1"], label="Fitted (Trend)")
-    plt.title("Q1: Trend Regression — Actual vs Fitted")
-    plt.xlabel("Time")
-    plt.ylabel(y_col)
-    plt.legend()
-    save_fig(os.path.join(outdir, "q1_trend_regression.png"))
+    q1_plot = os.path.join(outdir, "q1_trend_regression.png")
+    plot_series_with_forecast(model_df.index, y, fitted=model_df["yhat_q1"],
+                              title=f"Q1 - Hồi quy xu thế: {y_col}",
+                              ylabel=y_col, outpath=q1_plot)
 
     with open(os.path.join(outdir, "q1_ols_summary.txt"), "w", encoding="utf-8") as f:
         f.write(ols1.summary().as_text())
 
-    # ---- Q2: ETS for Sanluong ----
+    # ---------- Q2: ETS for Sanluong ----------
     best_name_y, best_model_y, _ = fit_best_ets(model_df[y_col].values, seasonal_periods=4)
     fitted_y = best_model_y.fittedvalues if hasattr(best_model_y, "fittedvalues") else best_model_y.predict(start=0, end=len(model_df)-1)
     mape_q2_y = safe_mape(model_df[y_col].values, fitted_y)
@@ -161,20 +280,14 @@ def main(args):
     fc_index = pd.period_range(model_df.index[-1].to_period("Q")+1, periods=h, freq="Q").to_timestamp(how="end")
     fc_y = best_model_y.forecast(h)
     q2_sanluong_forecast = pd.Series(fc_y, index=fc_index, name="Sanluong_forecast")
+    q2a_plot = os.path.join(outdir, "q2a_ets_sanluong.png")
+    plot_series_with_forecast(model_df.index, model_df[y_col], fitted=fitted_y, forecast=fc_y, forecast_index=fc_index,
+                              title=f"Q2a - ETS ({best_name_y}) cho {y_col}", ylabel=y_col, outpath=q2a_plot)
     q2_sanluong_forecast.to_csv(os.path.join(outdir, "q2a_sanluong_forecast.csv"), index_label="date")
 
-    plt.figure()
-    plt.plot(model_df.index, model_df[y_col], label="Actual")
-    plt.plot(model_df.index, fitted_y, label=f"Fitted ({best_name_y})")
-    plt.plot(fc_index, q2_sanluong_forecast.values, label="Forecast (next {})".format(h))
-    plt.title(f"Q2a: Exponential Smoothing for {y_col}")
-    plt.xlabel("Time")
-    plt.ylabel(y_col)
-    plt.legend()
-    save_fig(os.path.join(outdir, "q2a_ets_sanluong.png"))
-
-    # Q2b: ETS for regressors
+    # ---------- Q2b: ETS for regressors ----------
     ets_regressors = {}
+    q2b_plots = []
     for col in ["Hoahong", "CPQC"]:
         if col in model_df.columns:
             best_name, best_model, _ = fit_best_ets(model_df[col].astype(float).values, seasonal_periods=4)
@@ -182,18 +295,12 @@ def main(args):
             mape = safe_mape(model_df[col].values, fitted)
             fc = best_model.forecast(h)
             ets_regressors[col] = {"best": best_name, "model": best_model, "fitted": fitted, "mape": mape, "forecast": fc}
+            pth = os.path.join(outdir, f"q2b_ets_{col.lower()}.png")
+            plot_series_with_forecast(model_df.index, model_df[col].values, fitted=fitted, forecast=fc, forecast_index=fc_index,
+                                      title=f"Q2b - ETS ({best_name}) cho {col}", ylabel=col, outpath=pth)
+            q2b_plots.append(pth)
 
-            plt.figure()
-            plt.plot(model_df.index, model_df[col].values, label="Actual")
-            plt.plot(model_df.index, fitted, label=f"Fitted ({best_name})")
-            plt.plot(fc_index, fc, label="Forecast (next {})".format(h))
-            plt.title(f"Q2b: Exponential Smoothing for {col}")
-            plt.xlabel("Time")
-            plt.ylabel(col)
-            plt.legend()
-            save_fig(os.path.join(outdir, f"q2b_ets_{col.lower()}.png"))
-
-    # ---- Q3: Multiple regression with seasonal dummies ----
+    # ---------- Q3: Multiple regression ----------
     X_cols = [t_col, "CPQC", "Hoahong", "Q2", "Q3", "Q4"]
     X_cols = [c for c in X_cols if c in model_df.columns]
     X3 = sm.add_constant(model_df[X_cols])
@@ -201,7 +308,7 @@ def main(args):
     model_df["yhat_q3_insample"] = ols3.predict(X3)
     mape_q3_in = safe_mape(y, model_df["yhat_q3_insample"])
 
-    # Build future design
+    # Build future design using ETS forecasts for regressors if present
     future_df = pd.DataFrame(index=fc_index)
     future_df[t_col] = np.arange(model_df[t_col].iloc[-1] + 1, model_df[t_col].iloc[-1] + h + 1)
     future_quarters = (((future_df[t_col].astype(int) - 1) % 4) + 1).values
@@ -215,24 +322,18 @@ def main(args):
     X3_future = sm.add_constant(future_df[X_cols], has_constant="add")
     q3_forecast = ols3.predict(X3_future)
     q3_forecast = pd.Series(q3_forecast, index=fc_index, name="Sanluong_forecast_q3")
+    q3_plot = os.path.join(outdir, "q3_multireg_forecast.png")
+    plot_series_with_forecast(model_df.index, model_df[y_col], fitted=model_df["yhat_q3_insample"],
+                              forecast=q3_forecast.values, forecast_index=fc_index,
+                              title="Q3 - Hồi quy đa biến (dự báo bằng ETS regressors)", ylabel=y_col, outpath=q3_plot)
     q3_forecast.to_csv(os.path.join(outdir, "q3_sanluong_forecast.csv"), index_label="date")
-
-    plt.figure()
-    plt.plot(model_df.index, model_df[y_col], label="Actual")
-    plt.plot(model_df.index, model_df["yhat_q3_insample"], label="Fitted (Q3 model)")
-    plt.plot(fc_index, q3_forecast.values, label="Forecast (Q3 model)")
-    plt.title("Q3: Multiple Regression Forecast (with ETS regressors)")
-    plt.xlabel("Time")
-    plt.ylabel(y_col)
-    plt.legend()
-    save_fig(os.path.join(outdir, "q3_multireg_forecast.png"))
-
     with open(os.path.join(outdir, "q3_ols_summary.txt"), "w", encoding="utf-8") as f:
         f.write(ols3.summary().as_text())
 
-    # ---- Q4: Compare Model (2) vs (3) on holdout ----
+    # ---------- Q4: Compare models using holdout ----------
     train_df, test_df = train_test_split_time(model_df, test_h=4)
 
+    # Model (2) full (with Hoahong)
     X_cols_2 = [t_col, "CPQC", "Hoahong", "Q2", "Q3", "Q4"]
     X_cols_2 = [c for c in X_cols_2 if c in train_df.columns]
     X_train_2 = sm.add_constant(train_df[X_cols_2])
@@ -244,6 +345,7 @@ def main(args):
     else:
         mape_ols2_test = np.nan
 
+    # Model (3) drop Hoahong
     X_cols_3 = [t_col, "CPQC", "Q2", "Q3", "Q4"]
     X_cols_3 = [c for c in X_cols_3 if c in train_df.columns]
     X_train_3 = sm.add_constant(train_df[X_cols_3])
@@ -260,6 +362,7 @@ def main(args):
     with open(os.path.join(outdir, "q4_model3_summary.txt"), "w", encoding="utf-8") as f:
         f.write(ols3alt_train.summary().as_text())
 
+    # metrics summary
     metrics_summary = pd.DataFrame({
         "Model": ["Q1: Trend", "Q2: ETS (Sanluong) in-sample", "Q3: Full multireg in-sample",
                   "Q4-Compare: Model(2) holdout", "Q4-Compare: Model(3) holdout"],
@@ -267,29 +370,62 @@ def main(args):
         "Adj_R2": [np.nan, np.nan, ols3.rsquared_adj, ols2_train.rsquared_adj, ols3alt_train.rsquared_adj],
         "AIC": [ols1.aic, np.nan, ols3.aic, ols2_train.aic, ols3alt_train.aic]
     })
-    metrics_summary.to_csv(os.path.join(outdir, "metrics_summary.csv"), index=False)
+    metrics_csv = os.path.join(outdir, "metrics_summary.csv")
+    metrics_summary.to_csv(metrics_csv, index=False)
 
     # Recommendation
     if pd.notna(mape_ols2_test) and pd.notna(mape_ols3alt_test):
         if mape_ols2_test < mape_ols3alt_test:
-            rec = "Chọn Model (2) vì MAPE holdout thấp hơn."
+            rec = "Chọn Model (2) (có Hoahong) vì MAPE holdout thấp hơn."
         elif mape_ols3alt_test < mape_ols2_test:
-            rec = "Chọn Model (3) vì MAPE holdout thấp hơn."
+            rec = "Chọn Model (3) (không có Hoahong) vì MAPE holdout thấp hơn."
         else:
             rec = "Hai mô hình tương đương theo MAPE holdout; cân nhắc AIC/R² và tính đơn giản."
     else:
         rec = "Không đủ dữ liệu holdout để so sánh khách quan; tham khảo AIC/R² và tính đơn giản."
 
-    # Print key outputs
-    print("\n=== Recommendation (Q4) ===")
-    print(rec)
-    print("\n=== Key Equations ===")
-    print(f"Q1: {y_col} = {ols1.params['const']:.4f} + {ols1.params[t_col]:.4f} * t + e")
-    print("\n=== Saved outputs in:", outdir, "===\n")
+    # ---------- Save main outputs ----------
+    with open(os.path.join(outdir, "q1_ols_summary.txt"), "w", encoding="utf-8") as f:
+        f.write(ols1.summary().as_text())
+
+    q1_eq = f"{y_col} = {ols1.params['const']:.4f} + {ols1.params[t_col]:.4f} * t + e"
+
+    # build summary text
+    summary_text = (
+        f"Phương pháp: Q1→Q4 tự động\n\n"
+        f"Q1 (Trend) equation:\n{q1_eq}\nMAPE in-sample: {safe_mape(y, model_df['yhat_q1']):.4f}\n\n"
+        f"Q2 (ETS) best for {y_col}: {best_name_y}, MAPE in-sample: {mape_q2_y:.4f}\n\n"
+        f"Q3 (Multiple regression) in-sample MAPE: {mape_q3_in:.4f}\n\n"
+        f"Q4 Recommendation: {rec}\n"
+    )
+
+    # images list in order for report
+    image_paths = [q1_plot, q2a_plot, q3_plot] + q2b_plots
+
+    # create PDF and PPTX
+    pdf_path = make_pdf_report(outdir, summary_text, image_paths, metrics_csv)
+    pptx_path = make_pptx_report(outdir, summary_text, image_paths, metrics_csv)
+
+    # print final info
+    print("\n=== DONE ===")
+    print("Outputs saved in:", os.path.abspath(outdir))
+    print("Key files:")
+    print("- Q1 plot:", q1_plot)
+    print("- Q2 ATS plot:", q2a_plot)
+    if q2b_plots:
+        print("- Q2b plots:", q2b_plots)
+    print("- Q3 plot:", q3_plot)
+    print("- Forecast CSVs:", os.path.join(outdir, "q2a_sanluong_forecast.csv"), os.path.join(outdir, "q3_sanluong_forecast.csv"))
+    print("- Metrics summary CSV:", metrics_csv)
+    print("- PDF report:", pdf_path)
+    print("- PPTX report:", pptx_path)
+    print("\nRecommendation (Q4):", rec)
+    print("\nEquation Q1:", q1_eq)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sav", type=str, required=True, help="Path to the .sav data file")
+    parser.add_argument("--sav", type=str, required=True,
+                        help="Path to the .sav data file. MUST be named exactly: 'Du bao bang mo hinh nhan qua san luong _ CPQC Hoahong quy.sav'")
     parser.add_argument("--h", type=int, default=4, help="Forecast horizon (quarters)")
     parser.add_argument("--outdir", type=str, default="outputs", help="Folder to save outputs")
     args = parser.parse_args()

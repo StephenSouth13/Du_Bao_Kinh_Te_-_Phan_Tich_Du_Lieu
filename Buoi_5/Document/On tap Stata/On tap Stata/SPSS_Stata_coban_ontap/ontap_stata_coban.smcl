@@ -1,0 +1,546 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}D:\OneDrive\1. Data\14. Tai lieu lop hoc\1. Kinh te luong ung dung\On tap Stata\Stata_coban_ontap\ontap_stata_coban.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}23 Mar 2024, 15:12:18
+
+{com}. label var hocvan Học_vấn
+
+. 
+. label var hocvan "Học vấn"
+
+. 
+. label def mgioitinh 1 "nam" 0 "nữ"
+
+. 
+. label def mchucvu 1 "nhân viên" 2 "trưởng nhóm" 3 "quản lý"
+
+. 
+. label dir
+{res}mchucvu
+mgioitinh
+bangcap
+quanly
+truongnhom
+nhanvien
+chucvu
+nu
+gioitinh
+
+{com}. 
+. label list
+{txt}mchucvu:
+{res}           1 nhân viên
+           2 trưởng nhóm
+           3 quản lý
+{txt}mgioitinh:
+{res}           0 nữ
+           1 nam
+{txt}bangcap:
+{res}           1 THCS
+           2 THPT
+           3 Trung cấp/Cao đẳng
+           4 Đại học
+           5 Sau Đại học
+{txt}quanly:
+{res}           0 không phải quản lý
+           1 quản lý
+{txt}truongnhom:
+{res}           0 không phải trưởng nhóm
+           1 trưởng nhóm
+{txt}nhanvien:
+{res}           0 không phải nhân viên
+           1 nhân viên
+{txt}chucvu:
+{res}           1 Nhân viên
+           2 Trưởng nhóm
+           3 Quản lý
+{txt}nu:
+{res}           0 nam
+           1 nữ
+{txt}gioitinh:
+{res}           0 nu
+           1 nam
+
+{com}. 
+. label values gioitinh mgioitinh
+
+. 
+. sum luongthang
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 2}luongthang {c |}{res}        474    2868.297    1422.972     1312.5      11250
+
+{com}. 
+. sum luongthang, detail
+
+                       {txt}lương tháng
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}     1350         1312.5
+{txt} 5%    {res}     1600           1325
+{txt}10%    {res}     1750           1350       {txt}Obs         {res}        474
+{txt}25%    {res}     2000           1350       {txt}Sum of wgt. {res}        474
+
+{txt}50%    {res}  2406.25                      {txt}Mean          {res} 2868.297
+                        {txt}Largest       Std. dev.     {res} 1422.972
+{txt}75%    {res}   3087.5           8625
+{txt}90%    {res}     4950       8645.833       {txt}Variance      {res}  2024849
+{txt}95%    {res} 5833.333        9218.75       {txt}Skewness      {res} 2.117877
+{txt}99%    {res} 8333.333          11250       {txt}Kurtosis      {res}  8.30863
+
+{com}. 
+. sum luongthang if chucvu == 3
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 2}luongthang {c |}{res}         84    5331.483    1520.398     2867.5      11250
+
+{com}. 
+. tab chucvu, sum(luongthang)
+
+            {txt}{c |}       Summary of lương tháng
+    chức vụ {c |}        Mean   Std. dev.       Freq.
+{hline 12}{c +}{hline 36}
+  Nhân viên {c |}  {res} 2319.8783   630.66625         363
+  {txt}Trưởng nh {c |}  {res} 2578.2407   176.21803          27
+  {txt}  Quản lý {c |}  {res} 5331.4831    1520.398          84
+{txt}{hline 12}{c +}{hline 36}
+      Total {c |}  {res} 2868.2973   1422.9718         474
+
+{com}. 
+. table luongthang
+{res}
+{smcl}
+{reset}{...}
+{hline 11}{c -}{c TT}{c -}{c -}{hline 9}
+{space 11} {c |}  Frequency
+{hline 11}{c -}{c +}{c -}{c -}{hline 9}
+lương tháng {c |}  {space 9}
+  1312.5{space 3} {c |}  {space 8}{result:1}
+  1325{space 5} {c |}  {space 8}{result:1}
+  1350{space 5} {c |}  {space 8}{result:3}
+  1362.5{space 3} {c |}  {space 8}{result:1}
+  1375{space 5} {c |}  {space 8}{result:1}
+  1387.5{space 3} {c |}  {space 8}{result:1}
+  1400{space 5} {c |}  {space 8}{result:1}
+  1412.5{space 3} {c |}  {space 8}{result:3}
+  1425{space 5} {c |}  {space 8}{result:2}
+  1437.5{space 3} {c |}  {space 8}{result:1}
+  1450{space 5} {c |}  {space 8}{result:2}
+  1475{space 5} {c |}  {space 8}{result:1}
+  1512.5{space 3} {c |}  {space 8}{result:2}
+  1537.5{space 3} {c |}  {space 8}{result:1}
+  1562.5{space 3} {c |}  {space 8}{result:1}
+  1600{space 5} {c |}  {space 8}{result:2}
+  1637.5{space 3} {c |}  {space 8}{result:6}
+  1650{space 5} {c |}  {space 8}{result:1}
+  1662.5{space 3} {c |}  {space 8}{result:2}
+  1675{space 5} {c |}  {space 8}{result:2}
+  1700{space 5} {c |}  {space 8}{result:3}
+  1712.5{space 3} {c |}  {space 8}{result:1}
+  1725{space 5} {c |}  {space 8}{result:2}
+  1737.5{space 3} {c |}  {space 8}{result:5}
+  1750{space 5} {c |}  {space 8}{result:2}
+  1762.5{space 3} {c |}  {space 8}{result:2}
+  1775{space 5} {c |}  {space 8}{result:4}
+  1787.5{space 3} {c |}  {space 8}{result:3}
+  1800{space 5} {c |}  {space 8}{result:3}
+  1812.5{space 3} {c |}  {space 8}{result:3}
+  1825{space 5} {c |}  {space 8}{result:5}
+  1837.5{space 3} {c |}  {space 8}{result:4}
+  1850{space 5} {c |}  {space 8}{result:3}
+  1862.5{space 3} {c |}  {space 8}{result:6}
+  1875{space 5} {c |}  {space 8}{result:7}
+  1887.5{space 3} {c |}  {space 8}{result:2}
+  1900{space 5} {c |}  {space 8}{result:2}
+  1912.5{space 3} {c |}  {space 8}{result:4}
+  1925{space 5} {c |}  {space 8}{result:4}
+  1937.5{space 3} {c |}  {space 8}{result:2}
+  1950{space 5} {c |}  {space 8}{result:4}
+  1962.5{space 3} {c |}  {space 8}{result:2}
+  1975{space 5} {c |}  {space 8}{result:2}
+  1987.5{space 3} {c |}  {space 8}{result:2}
+  2000{space 5} {c |}  {space 8}{result:8}
+  2012.5{space 3} {c |}  {space 8}{result:4}
+  2025{space 5} {c |}  {space 8}{result:4}
+  2037.5{space 3} {c |}  {space 8}{result:8}
+  2050{space 5} {c |}  {space 8}{result:2}
+  2062.5{space 3} {c |}  {space 8}{result:4}
+  2075{space 5} {c |}  {space 8}{result:1}
+  2087.5{space 3} {c |}  {space 8}{result:4}
+  2100{space 5} {c |}  {space 8}{result:5}
+  2112.5{space 3} {c |}  {space 8}{result:2}
+  2125{space 5} {c |}  {space 8}{result:4}
+  2137.5{space 3} {c |}  {space 8}{result:2}
+  2150{space 5} {c |}  {space 8}{result:2}
+  2162.5{space 3} {c |}  {space 8}{result:4}
+  2175{space 5} {c |}  {space 8}{result:2}
+  2187.5{space 3} {c |}  {space 8}{result:7}
+  2200{space 5} {c |}  {space 8}{result:4}
+  2212.5{space 3} {c |}  {space 8}{result:5}
+  2225{space 5} {c |}  {space 8}{result:7}
+  2237.5{space 3} {c |}  {space 8}{result:2}
+  2250{space 5} {c |}  {space 8}{result:3}
+  2262.5{space 3} {c |}  {space 8}{result:2}
+  2275{space 5} {c |}  {space 8}{result:5}
+  2287.5{space 3} {c |}  {space 8}{result:5}
+  2300{space 5} {c |}  {space 8}{result:2}
+  2312.5{space 3} {c |}  {space 8}{result:7}
+  2325{space 5} {c |}  {space 8}{result:4}
+  2337.5{space 3} {c |}  {space 8}{result:3}
+  2350{space 5} {c |}  {space 8}{result:1}
+  2362.5{space 3} {c |}  {space 8}{result:3}
+  2375{space 5} {c |}  {space 8}{result:6}
+  2387.5{space 3} {c |}  {space 8}{result:1}
+  2400{space 5} {c |}  {space 8}{result:2}
+  2412.5{space 3} {c |}  {space 8}{result:1}
+  2425{space 5} {c |}  {space 8}{result:5}
+  2430{space 5} {c |}  {space 8}{result:1}
+  2437.5{space 3} {c |}  {space 8}{result:2}
+  2445{space 5} {c |}  {space 8}{result:1}
+  2450{space 5} {c |}  {space 8}{result:5}
+  2462.5{space 3} {c |}  {space 8}{result:1}
+  2475{space 5} {c |}  {space 8}{result:1}
+  2487.5{space 3} {c |}  {space 8}{result:4}
+  2500{space 5} {c |}  {space 8}{result:5}
+  2512.5{space 3} {c |}  {space 8}{result:2}
+  2522.5{space 3} {c |}  {space 8}{result:1}
+  2525{space 5} {c |}  {space 8}{result:4}
+  2537.5{space 3} {c |}  {space 8}{result:1}
+  2550{space 5} {c |}  {space 8}{result:3}
+  2562.5{space 3} {c |}  {space 7}{result:13}
+  2575{space 5} {c |}  {space 8}{result:3}
+  2587.5{space 3} {c |}  {space 8}{result:1}
+  2600{space 5} {c |}  {space 8}{result:3}
+  2612.5{space 3} {c |}  {space 8}{result:3}
+  2625{space 5} {c |}  {space 8}{result:3}
+  2637.5{space 3} {c |}  {space 8}{result:4}
+  2662.5{space 3} {c |}  {space 8}{result:4}
+  2675{space 5} {c |}  {space 8}{result:1}
+  2700{space 5} {c |}  {space 8}{result:1}
+  2712.5{space 3} {c |}  {space 8}{result:3}
+  2737.5{space 3} {c |}  {space 8}{result:1}
+  2750{space 5} {c |}  {space 8}{result:1}
+  2762.5{space 3} {c |}  {space 8}{result:1}
+  2775{space 5} {c |}  {space 8}{result:3}
+  2787.5{space 3} {c |}  {space 8}{result:1}
+  2795{space 5} {c |}  {space 8}{result:1}
+  2812.5{space 3} {c |}  {space 8}{result:1}
+  2825{space 5} {c |}  {space 8}{result:6}
+  2867.5{space 3} {c |}  {space 8}{result:1}
+  2875{space 5} {c |}  {space 8}{result:5}
+  2885{space 5} {c |}  {space 8}{result:1}
+  2900{space 5} {c |}  {space 8}{result:2}
+  2912.5{space 3} {c |}  {space 8}{result:1}
+  2925{space 5} {c |}  {space 8}{result:2}
+  2937.5{space 3} {c |}  {space 8}{result:4}
+  2962.5{space 3} {c |}  {space 8}{result:2}
+  2975{space 5} {c |}  {space 8}{result:3}
+  3000{space 5} {c |}  {space 8}{result:4}
+  3012.5{space 3} {c |}  {space 8}{result:1}
+  3050{space 5} {c |}  {space 8}{result:1}
+  3087.5{space 3} {c |}  {space 8}{result:1}
+  3125{space 5} {c |}  {space 8}{result:1}
+  3137.5{space 3} {c |}  {space 8}{result:1}
+  3150{space 5} {c |}  {space 8}{result:3}
+  3200{space 5} {c |}  {space 8}{result:1}
+  3212.5{space 3} {c |}  {space 8}{result:1}
+  3225{space 5} {c |}  {space 8}{result:1}
+  3237.5{space 3} {c |}  {space 8}{result:2}
+  3262.5{space 3} {c |}  {space 8}{result:1}
+  3275{space 5} {c |}  {space 8}{result:1}
+  3300{space 5} {c |}  {space 8}{result:1}
+  3325{space 5} {c |}  {space 8}{result:1}
+  3337.5{space 3} {c |}  {space 8}{result:1}
+  3350{space 5} {c |}  {space 8}{result:4}
+  3362.5{space 3} {c |}  {space 8}{result:2}
+  3400{space 5} {c |}  {space 8}{result:2}
+  3425{space 5} {c |}  {space 8}{result:1}
+  3462.5{space 3} {c |}  {space 8}{result:1}
+  3500{space 5} {c |}  {space 8}{result:1}
+  3525{space 5} {c |}  {space 8}{result:2}
+  3583.333{space 1} {c |}  {space 8}{result:1}
+  3617.5{space 3} {c |}  {space 8}{result:1}
+  3625{space 5} {c |}  {space 8}{result:1}
+  3637.5{space 3} {c |}  {space 8}{result:1}
+  3662.5{space 3} {c |}  {space 8}{result:1}
+  3739.583{space 1} {c |}  {space 8}{result:1}
+  3750{space 5} {c |}  {space 8}{result:1}
+  3762.5{space 3} {c |}  {space 8}{result:1}
+  3770.833{space 1} {c |}  {space 8}{result:1}
+  3802.083{space 1} {c |}  {space 8}{result:1}
+  3833.333{space 1} {c |}  {space 8}{result:2}
+  3906.25{space 2} {c |}  {space 8}{result:1}
+  3937.5{space 3} {c |}  {space 8}{result:1}
+  3962.5{space 3} {c |}  {space 8}{result:1}
+  4000{space 5} {c |}  {space 8}{result:1}
+  4062.5{space 3} {c |}  {space 8}{result:1}
+  4083.333{space 1} {c |}  {space 8}{result:1}
+  4166.667{space 1} {c |}  {space 8}{result:1}
+  4212.5{space 3} {c |}  {space 8}{result:1}
+  4250{space 5} {c |}  {space 8}{result:1}
+  4270.833{space 1} {c |}  {space 8}{result:1}
+  4287.5{space 3} {c |}  {space 8}{result:1}
+  4343.75{space 2} {c |}  {space 8}{result:1}
+  4387.5{space 3} {c |}  {space 8}{result:1}
+  4427.083{space 1} {c |}  {space 8}{result:1}
+  4500{space 5} {c |}  {space 8}{result:1}
+  4531.25{space 2} {c |}  {space 8}{result:1}
+  4572.917{space 1} {c |}  {space 8}{result:1}
+  4575{space 5} {c |}  {space 8}{result:1}
+  4583.333{space 1} {c |}  {space 8}{result:3}
+  4625{space 5} {c |}  {space 8}{result:1}
+  4645.833{space 1} {c |}  {space 8}{result:1}
+  4708.333{space 1} {c |}  {space 8}{result:1}
+  4712.5{space 3} {c |}  {space 8}{result:1}
+  4729.167{space 1} {c |}  {space 8}{result:1}
+  4750{space 5} {c |}  {space 8}{result:1}
+  4843.75{space 2} {c |}  {space 8}{result:1}
+  4895.833{space 1} {c |}  {space 8}{result:1}
+  4947.917{space 1} {c |}  {space 8}{result:1}
+  4950{space 5} {c |}  {space 8}{result:1}
+  5000{space 5} {c |}  {space 8}{result:2}
+  5031.25{space 2} {c |}  {space 8}{result:1}
+  5052.083{space 1} {c |}  {space 8}{result:1}
+  5104.167{space 1} {c |}  {space 8}{result:1}
+  5156.25{space 2} {c |}  {space 8}{result:2}
+  5208.333{space 1} {c |}  {space 8}{result:1}
+  5416.667{space 1} {c |}  {space 8}{result:3}
+  5500{space 5} {c |}  {space 8}{result:1}
+  5520.833{space 1} {c |}  {space 8}{result:1}
+  5562.5{space 3} {c |}  {space 8}{result:1}
+  5572.917{space 1} {c |}  {space 8}{result:2}
+  5625{space 5} {c |}  {space 8}{result:1}
+  5677.083{space 1} {c |}  {space 8}{result:2}
+  5729.167{space 1} {c |}  {space 8}{result:2}
+  5770.833{space 1} {c |}  {space 8}{result:1}
+  5833.333{space 1} {c |}  {space 8}{result:2}
+  5906.25{space 2} {c |}  {space 8}{result:1}
+  6041.667{space 1} {c |}  {space 8}{result:1}
+  6125{space 5} {c |}  {space 8}{result:1}
+  6145.833{space 1} {c |}  {space 8}{result:1}
+  6250{space 5} {c |}  {space 8}{result:2}
+  6510.417{space 1} {c |}  {space 8}{result:1}
+  6520.833{space 1} {c |}  {space 8}{result:1}
+  6541.667{space 1} {c |}  {space 8}{result:1}
+  6666.667{space 1} {c |}  {space 8}{result:1}
+  6770.833{space 1} {c |}  {space 8}{result:1}
+  6875{space 5} {c |}  {space 8}{result:1}
+  6979.167{space 1} {c |}  {space 8}{result:1}
+  7187.5{space 3} {c |}  {space 8}{result:1}
+  7552.083{space 1} {c |}  {space 8}{result:1}
+  7604.167{space 1} {c |}  {space 8}{result:1}
+  7666.667{space 1} {c |}  {space 8}{result:1}
+  8083.333{space 1} {c |}  {space 8}{result:1}
+  8333.333{space 1} {c |}  {space 8}{result:1}
+  8625{space 5} {c |}  {space 8}{result:1}
+  8645.833{space 1} {c |}  {space 8}{result:1}
+  9218.75{space 2} {c |}  {space 8}{result:1}
+  11250{space 4} {c |}  {space 8}{result:1}
+  Total{space 4} {c |}  {space 6}{result:474}
+{hline 11}{c -}{c BT}{c -}{c -}{hline 9}
+
+{com}. 
+. tabstat luongthang, by (chucvu)
+
+{txt}Summary for variables: luongthang
+Group variable: chucvu (chức vụ)
+
+{ralign 11:chucvu} {...}
+{c |}      Mean
+{hline 12}{c +}{hline 10}
+{ralign 11:Nhân viên} {...}
+{c |}{...}
+ {res} 2319.878
+{txt}{ralign 11:Trưởng nhóm} {...}
+{c |}{...}
+ {res} 2578.241
+{txt}{ralign 11:Quản lý} {...}
+{c |}{...}
+ {res} 5331.483
+{txt}{hline 12}{c +}{hline 10}
+{ralign 11:Total} {...}
+{c |}{...}
+ {res} 2868.297
+{txt}{hline 12}{c BT}{hline 10}
+
+{com}. 
+. tabstat luongthang, s(n mean sd min max q) by (chucvu)
+
+{txt}Summary for variables: luongthang
+Group variable: chucvu (chức vụ)
+
+{ralign 11:chucvu} {...}
+{c |}         N      Mean        SD       Min       Max       p25       p50       p75
+{hline 12}{c +}{hline 80}
+{ralign 11:Nhân viên} {...}
+{c |}{...}
+ {res}      363  2319.878  630.6662    1312.5  6666.667      1900    2212.5      2600
+{txt}{ralign 11:Trưởng nhóm} {...}
+{c |}{...}
+ {res}       27  2578.241   176.218      2025    2937.5      2500    2562.5      2600
+{txt}{ralign 11:Quản lý} {...}
+{c |}{...}
+ {res}       84  5331.483  1520.398    2867.5     11250  4315.625  5041.667  5973.958
+{txt}{hline 12}{c +}{hline 80}
+{ralign 11:Total} {...}
+{c |}{...}
+ {res}      474  2868.297  1422.972    1312.5     11250      2000   2406.25    3087.5
+{txt}{hline 12}{c BT}{hline 80}
+
+{com}. 
+. 
+. 
+. regress luongthang hocvan gioitinh thoigianlv truongnhom quanly
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       474
+{txt}{hline 13}{c +}{hline 34}   F(5, 468)       = {res}   249.75
+{txt}       Model {c |} {res}  696659832         5   139331966   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  261093609       468  557892.327   {txt}R-squared       ={res}    0.7274
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7245
+{txt}       Total {c |} {res}  957753441       473  2024848.71   {txt}Root MSE        =   {res} 746.92
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  luongthang{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}hocvan {c |}{col 14}{res}{space 2} 122.3166{col 26}{space 2}  16.3939{col 37}{space 1}    7.46{col 46}{space 3}0.000{col 54}{space 4} 90.10181{col 67}{space 3} 154.5313
+{txt}{space 4}gioitinh {c |}{col 14}{res}{space 2}  437.785{col 26}{space 2} 79.72083{col 37}{space 1}    5.49{col 46}{space 3}0.000{col 54}{space 4} 281.1299{col 67}{space 3} 594.4401
+{txt}{space 2}thoigianlv {c |}{col 14}{res}{space 2} 8.525915{col 26}{space 2} 3.425183{col 37}{space 1}    2.49{col 46}{space 3}0.013{col 54}{space 4} 1.795273{col 67}{space 3} 15.25656
+{txt}{space 2}truongnhom {c |}{col 14}{res}{space 2} 333.8739{col 26}{space 2} 165.6341{col 37}{space 1}    2.02{col 46}{space 3}0.044{col 54}{space 4} 8.395328{col 67}{space 3} 659.3525
+{txt}{space 6}quanly {c |}{col 14}{res}{space 2} 2278.507{col 26}{space 2} 114.0071{col 37}{space 1}   19.99{col 46}{space 3}0.000{col 54}{space 4} 2054.478{col 67}{space 3} 2502.536
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-134.5708{col 26}{space 2} 337.0917{col 37}{space 1}   -0.40{col 46}{space 3}0.690{col 54}{space 4}-796.9714{col 67}{space 3} 527.8299
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. regress luongthang hocvan gioitinh thoigianlv truongnhom quanly, beta
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       474
+{txt}{hline 13}{c +}{hline 34}   F(5, 468)       = {res}   249.75
+{txt}       Model {c |} {res}  696659832         5   139331966   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  261093609       468  557892.327   {txt}R-squared       ={res}    0.7274
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7245
+{txt}       Total {c |} {res}  957753441       473  2024848.71   {txt}Root MSE        =   {res} 746.92
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  luongthang{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 67}        Beta
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}hocvan {c |}{col 14}{res}{space 2} 122.3166{col 26}{space 2}  16.3939{col 37}{space 1}    7.46{col 46}{space 3}0.000{col 67}{space 3} .2479772
+{txt}{space 4}gioitinh {c |}{col 14}{res}{space 2}  437.785{col 26}{space 2} 79.72083{col 37}{space 1}    5.49{col 46}{space 3}0.000{col 67}{space 3} .1533845
+{txt}{space 2}thoigianlv {c |}{col 14}{res}{space 2} 8.525915{col 26}{space 2} 3.425183{col 37}{space 1}    2.49{col 46}{space 3}0.013{col 67}{space 3} .0602814
+{txt}{space 2}truongnhom {c |}{col 14}{res}{space 2} 333.8739{col 26}{space 2} 165.6341{col 37}{space 1}    2.02{col 46}{space 3}0.044{col 67}{space 3}  .054438
+{txt}{space 6}quanly {c |}{col 14}{res}{space 2} 2278.507{col 26}{space 2} 114.0071{col 37}{space 1}   19.99{col 46}{space 3}0.000{col 67}{space 3} .6120773
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-134.5708{col 26}{space 2} 337.0917{col 37}{space 1}   -0.40{col 46}{space 3}0.690{col 67}{space 3}        .
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. scatter luongthang hocvan
+{res}
+{com}. 
+. scatter luongthang hocvan || lfit luongthang hocvan
+{res}
+{com}. 
+. scatter luongthang hocvan || qfit luongthang hocvan
+{res}
+{com}. 
+. correlate luongthang hocvan
+{txt}(obs=474)
+
+             {c |} luongt~g   hocvan
+{hline 13}{c +}{hline 18}
+  luongthang {c |}{res}   1.0000
+      {txt}hocvan {c |}{res}   0.6606   1.0000
+
+
+{com}. 
+. regress luongthang hocvan gioitinh thoigianlv truongnhom quanly
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       474
+{txt}{hline 13}{c +}{hline 34}   F(5, 468)       = {res}   249.75
+{txt}       Model {c |} {res}  696659832         5   139331966   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  261093609       468  557892.327   {txt}R-squared       ={res}    0.7274
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7245
+{txt}       Total {c |} {res}  957753441       473  2024848.71   {txt}Root MSE        =   {res} 746.92
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  luongthang{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}hocvan {c |}{col 14}{res}{space 2} 122.3166{col 26}{space 2}  16.3939{col 37}{space 1}    7.46{col 46}{space 3}0.000{col 54}{space 4} 90.10181{col 67}{space 3} 154.5313
+{txt}{space 4}gioitinh {c |}{col 14}{res}{space 2}  437.785{col 26}{space 2} 79.72083{col 37}{space 1}    5.49{col 46}{space 3}0.000{col 54}{space 4} 281.1299{col 67}{space 3} 594.4401
+{txt}{space 2}thoigianlv {c |}{col 14}{res}{space 2} 8.525915{col 26}{space 2} 3.425183{col 37}{space 1}    2.49{col 46}{space 3}0.013{col 54}{space 4} 1.795273{col 67}{space 3} 15.25656
+{txt}{space 2}truongnhom {c |}{col 14}{res}{space 2} 333.8739{col 26}{space 2} 165.6341{col 37}{space 1}    2.02{col 46}{space 3}0.044{col 54}{space 4} 8.395328{col 67}{space 3} 659.3525
+{txt}{space 6}quanly {c |}{col 14}{res}{space 2} 2278.507{col 26}{space 2} 114.0071{col 37}{space 1}   19.99{col 46}{space 3}0.000{col 54}{space 4} 2054.478{col 67}{space 3} 2502.536
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-134.5708{col 26}{space 2} 337.0917{col 37}{space 1}   -0.40{col 46}{space 3}0.690{col 54}{space 4}-796.9714{col 67}{space 3} 527.8299
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. hettest
+
+{txt}Breusch–Pagan/Cook–Weisberg test for heteroskedasticity 
+Assumption: Normal error terms
+{p 0 11 0}Variable:{space 1}{res:{txt:Fitted values of} {res:luongthang}}{p_end}
+
+H0: Constant variance
+
+{ralign 11:chi2({res:1})} = {res}{ralign 6:346.01}
+{txt}{ralign 11:Prob > chi2} = {res}{ralign 6:0.0000}
+
+{com}. regress luongthang hocvan gioitinh thoigianlv truongnhom quanly, robust
+
+{txt}Linear regression                               Number of obs     = {res}       474
+                                                {txt}F(5, 468)         =  {res}   110.90
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.7274
+                                                {txt}Root MSE          =    {res} 746.92
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}  luongthang{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}hocvan {c |}{col 14}{res}{space 2} 122.3166{col 26}{space 2} 14.39999{col 37}{space 1}    8.49{col 46}{space 3}0.000{col 54}{space 4} 94.01993{col 67}{space 3} 150.6132
+{txt}{space 4}gioitinh {c |}{col 14}{res}{space 2}  437.785{col 26}{space 2} 63.36847{col 37}{space 1}    6.91{col 46}{space 3}0.000{col 54}{space 4}  313.263{col 67}{space 3} 562.3069
+{txt}{space 2}thoigianlv {c |}{col 14}{res}{space 2} 8.525915{col 26}{space 2} 3.816582{col 37}{space 1}    2.23{col 46}{space 3}0.026{col 54}{space 4} 1.026156{col 67}{space 3} 16.02567
+{txt}{space 2}truongnhom {c |}{col 14}{res}{space 2} 333.8739{col 26}{space 2} 96.75235{col 37}{space 1}    3.45{col 46}{space 3}0.001{col 54}{space 4} 143.7511{col 67}{space 3} 523.9967
+{txt}{space 6}quanly {c |}{col 14}{res}{space 2} 2278.507{col 26}{space 2} 168.9833{col 37}{space 1}   13.48{col 46}{space 3}0.000{col 54}{space 4} 1946.447{col 67}{space 3} 2610.567
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-134.5708{col 26}{space 2} 379.4004{col 37}{space 1}   -0.35{col 46}{space 3}0.723{col 54}{space 4}  -880.11{col 67}{space 3} 610.9685
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. hettest
+{err}{p}{bf:hettest} not appropriate after estimation using robust or clustered VCE{p_end}
+{txt}{search r(498), local:r(498);}
+
+{com}. predict y
+{txt}(option {bf:xb} assumed; fitted values)
+
+{com}. gen lnluongthang = ln(luongthang)
+
+. regress lnluongthang hocvan gioitinh thoigianlv truongnhom quanly, robust
+
+{txt}Linear regression                               Number of obs     = {res}       474
+                                                {txt}F(5, 468)         =  {res}   246.35
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.7588
+                                                {txt}Root MSE          =    {res} .19618
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}lnluongthang{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}hocvan {c |}{col 14}{res}{space 2} .0439796{col 26}{space 2} .0044221{col 37}{space 1}    9.95{col 46}{space 3}0.000{col 54}{space 4} .0352899{col 67}{space 3} .0526693
+{txt}{space 4}gioitinh {c |}{col 14}{res}{space 2} .1674704{col 26}{space 2} .0202577{col 37}{space 1}    8.27{col 46}{space 3}0.000{col 54}{space 4} .1276631{col 67}{space 3} .2072777
+{txt}{space 2}thoigianlv {c |}{col 14}{res}{space 2} .0024074{col 26}{space 2} .0009081{col 37}{space 1}    2.65{col 46}{space 3}0.008{col 54}{space 4}  .000623{col 67}{space 3} .0041918
+{txt}{space 2}truongnhom {c |}{col 14}{res}{space 2} .1566795{col 26}{space 2} .0340904{col 37}{space 1}    4.60{col 46}{space 3}0.000{col 54}{space 4} .0896903{col 67}{space 3} .2236686
+{txt}{space 6}quanly {c |}{col 14}{res}{space 2} .5590424{col 26}{space 2} .0345815{col 37}{space 1}   16.17{col 46}{space 3}0.000{col 54}{space 4} .4910882{col 67}{space 3} .6269966
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 6.884119{col 26}{space 2} .0934554{col 37}{space 1}   73.66{col 46}{space 3}0.000{col 54}{space 4} 6.700475{col 67}{space 3} 7.067763
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. log off
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}D:\OneDrive\1. Data\14. Tai lieu lop hoc\1. Kinh te luong ung dung\On tap Stata\Stata_coban_ontap\ontap_stata_coban.smcl
+  {txt}log type:  {res}smcl
+ {txt}paused on:  {res}23 Mar 2024, 16:24:59
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

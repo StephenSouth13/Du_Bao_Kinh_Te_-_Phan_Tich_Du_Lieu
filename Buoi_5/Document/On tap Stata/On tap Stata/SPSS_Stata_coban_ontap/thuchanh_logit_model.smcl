@@ -1,0 +1,125 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}D:\OneDrive\1. Data\14. Tai lieu lop hoc\1. Kinh te luong ung dung\On tap Stata\Stata_coban_ontap\thuchanh_logit_model.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}30 Mar 2024, 13:59:31
+
+{com}. tab trano
+
+      {txt}TRANO {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         84       16.80       16.80
+{txt}          1 {c |}{res}        416       83.20      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        500      100.00
+
+{com}. log off
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}D:\OneDrive\1. Data\14. Tai lieu lop hoc\1. Kinh te luong ung dung\On tap Stata\Stata_coban_ontap\thuchanh_logit_model.smcl
+  {txt}log type:  {res}smcl
+ {txt}paused on:  {res}30 Mar 2024, 14:02:03
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}D:\OneDrive\1. Data\14. Tai lieu lop hoc\1. Kinh te luong ung dung\On tap Stata\Stata_coban_ontap\thuchanh_logit_model.smcl
+  {txt}log type:  {res}smcl
+{txt}resumed on:  {res}30 Mar 2024, 14:04:05
+
+{com}. logit trano tuoi gtinh tgianlam pthuoc thunhap honnhan
+
+{res}{txt}Iteration 0:{space 3}log likelihood = {res:-226.35037}  
+Iteration 1:{space 3}log likelihood = {res: -154.1601}  
+Iteration 2:{space 3}log likelihood = {res:-124.94273}  
+Iteration 3:{space 3}log likelihood = {res:-108.56116}  
+Iteration 4:{space 3}log likelihood = {res:-104.53199}  
+Iteration 5:{space 3}log likelihood = {res:-104.51898}  
+Iteration 6:{space 3}log likelihood = {res:-104.51898}  
+{res}
+{txt}Logistic regression{col 57}{lalign 13:Number of obs}{col 70} = {res}{ralign 6:500}
+{txt}{col 57}{lalign 13:LR chi2({res:6})}{col 70} = {res}{ralign 6:243.66}
+{txt}{col 57}{lalign 13:Prob > chi2}{col 70} = {res}{ralign 6:0.0000}
+{txt}Log likelihood = {res:-104.51898}{col 57}{lalign 13:Pseudo R2}{col 70} = {res}{ralign 6:0.5382}
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}       trano{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}tuoi {c |}{col 14}{res}{space 2} .1230616{col 26}{space 2} .0280148{col 37}{space 1}    4.39{col 46}{space 3}0.000{col 54}{space 4} .0681536{col 67}{space 3} .1779695
+{txt}{space 7}gtinh {c |}{col 14}{res}{space 2}-.6934641{col 26}{space 2}  .364301{col 37}{space 1}   -1.90{col 46}{space 3}0.057{col 54}{space 4}-1.407481{col 67}{space 3} .0205527
+{txt}{space 4}tgianlam {c |}{col 14}{res}{space 2} .0011502{col 26}{space 2} .0026563{col 37}{space 1}    0.43{col 46}{space 3}0.665{col 54}{space 4}-.0040559{col 67}{space 3} .0063564
+{txt}{space 6}pthuoc {c |}{col 14}{res}{space 2}-1.880081{col 26}{space 2}  .269261{col 37}{space 1}   -6.98{col 46}{space 3}0.000{col 54}{space 4}-2.407823{col 67}{space 3}-1.352339
+{txt}{space 5}thunhap {c |}{col 14}{res}{space 2} .1185925{col 26}{space 2} .0195125{col 37}{space 1}    6.08{col 46}{space 3}0.000{col 54}{space 4} .0803487{col 67}{space 3} .1568362
+{txt}{space 5}honnhan {c |}{col 14}{res}{space 2}-.4138745{col 26}{space 2} .5722495{col 37}{space 1}   -0.72{col 46}{space 3}0.470{col 54}{space 4}-1.535463{col 67}{space 3} .7077139
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-3.539606{col 26}{space 2} 1.290338{col 37}{space 1}   -2.74{col 46}{space 3}0.006{col 54}{space 4}-6.068622{col 67}{space 3}-1.010589
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{p 0 6 2}Note: 0 failures and 36 successes completely determined.{p_end}
+
+{com}. mfx
+
+{txt}Marginal effects after logit
+      y  = Pr(trano) (predict)
+         = {res} .99782813
+{txt}{hline 9}{c TT}{hline 68}
+variable {c |}{col 17}dy/dx{col 26}Std. err.{col 40}z{col 45}P>|z|{col 52}[    95% C.I.   ]{col 75}X
+{hline 9}{c +}{hline 68}
+    tuoi {c |}  {res} .0002667      .00019    1.38   0.167  -.000112  .000645    44.314
+   {txt}gtinh*{c |}  {res}-.0016605      .00146   -1.14   0.254  -.004514  .001193      .384
+{txt}tgianlam {c |}  {res} 2.49e-06      .00001    0.41   0.680  -9.3e-06  .000014    121.42
+  {txt}pthuoc {c |}  {res}-.0040744      .00276   -1.48   0.140  -.009487  .001338     1.106
+ {txt}thunhap {c |}  {res}  .000257      .00015    1.68   0.093  -.000043  .000557    57.232
+ {txt}honnhan*{c |}  {res}-.0007717      .00104   -0.74   0.459  -.002814  .001271      .882
+{txt}{hline 9}{c BT}{hline 68}
+(*) dy/dx is for discrete change of dummy variable from 0 to 1
+
+{com}. mfx, at(tuoi=40)
+
+{txt}warning: no value assigned in at() for variables gtinh tgianlam pthuoc thunhap honnhan;
+   means used for gtinh tgianlam pthuoc thunhap honnhan
+
+Marginal effects after logit
+      y  = Pr(trano) (predict)
+         = {res} .99631248
+{txt}{hline 9}{c TT}{hline 68}
+variable {c |}{col 17}dy/dx{col 26}Std. err.{col 40}z{col 45}P>|z|{col 52}[    95% C.I.   ]{col 75}X
+{hline 9}{c +}{hline 68}
+    tuoi {c |}  {res} .0004521      .00033    1.35   0.175  -.000202  .001106        40
+   {txt}gtinh*{c |}  {res}-.0028137      .00239   -1.18   0.240  -.007506  .001878      .384
+{txt}tgianlam {c |}  {res} 4.23e-06      .00001    0.42   0.675  -.000016  .000024    121.42
+  {txt}pthuoc {c |}  {res}-.0069073      .00453   -1.53   0.127  -.015781  .001966     1.106
+ {txt}thunhap {c |}  {res} .0004357      .00025    1.75   0.079  -.000051  .000923    57.232
+ {txt}honnhan*{c |}  {res}-.0013087      .00175   -0.75   0.456  -.004747   .00213      .882
+{txt}{hline 9}{c BT}{hline 68}
+(*) dy/dx is for discrete change of dummy variable from 0 to 1
+
+{com}. test tuoi
+
+{p 0 7}{space 1}{text:( 1)}{space 1} {res}[trano]tuoi = 0{p_end}
+
+{txt}{col 12}chi2(  1) ={res}   19.30
+{txt}{col 10}Prob > chi2 =  {res}  0.0000
+
+{com}. test tgianlam
+
+{p 0 7}{space 1}{text:( 1)}{space 1} {res}[trano]tgianlam = 0{p_end}
+
+{txt}{col 12}chi2(  1) ={res}    0.19
+{txt}{col 10}Prob > chi2 =  {res}  0.6650
+
+{com}. sum thunhap
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}thunhap {c |}{res}        500      57.232    74.03259          6        732
+
+{com}. tab gtinh
+
+      {txt}GTINH {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        308       61.60       61.60
+{txt}          1 {c |}{res}        192       38.40      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        500      100.00
+
+{com}. exit, clear
