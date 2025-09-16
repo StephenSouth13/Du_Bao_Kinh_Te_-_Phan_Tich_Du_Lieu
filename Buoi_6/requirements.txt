@@ -1,0 +1,6 @@
+pandas
+matplotlib
+seaborn
+openpyxl
+python-docx
+tabulate
