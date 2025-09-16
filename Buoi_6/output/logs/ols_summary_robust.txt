@@ -1,0 +1,29 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                   wage   R-squared:                       0.323
+Model:                            OLS   Adj. R-squared:                  0.321
+Method:                 Least Squares   F-statistic:                     99.83
+Date:                Tue, 16 Sep 2025   Prob (F-statistic):           5.08e-89
+Time:                        17:55:24   Log-Likelihood:                -4240.4
+No. Observations:                1289   AIC:                             8493.
+Df Residuals:                    1283   BIC:                             8524.
+Df Model:                           5                                         
+Covariance Type:                  HC3                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -7.1833      1.097     -6.549      0.000      -9.333      -5.034
+female        -3.0749      0.365     -8.423      0.000      -3.790      -2.359
+nonwhite      -1.5653      0.400     -3.914      0.000      -2.349      -0.782
+union          1.0960      0.428      2.562      0.010       0.258       1.934
+education      1.3703      0.084     16.318      0.000       1.206       1.535
+exper          0.1666      0.016     10.346      0.000       0.135       0.198
+==============================================================================
+Omnibus:                      525.319   Durbin-Watson:                   1.898
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3519.893
+Skew:                           1.747   Prob(JB):                         0.00
+Kurtosis:                      10.303   Cond. No.                         141.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC3)

@@ -1,0 +1,29 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                   wage   R-squared:                       0.323
+Model:                            OLS   Adj. R-squared:                  0.321
+Method:                 Least Squares   F-statistic:                     122.6
+Date:                Tue, 16 Sep 2025   Prob (F-statistic):          3.45e-106
+Time:                        17:55:24   Log-Likelihood:                -4240.4
+No. Observations:                1289   AIC:                             8493.
+Df Residuals:                    1283   BIC:                             8524.
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -7.1833      1.016     -7.072      0.000      -9.176      -5.191
+female        -3.0749      0.365     -8.433      0.000      -3.790      -2.360
+nonwhite      -1.5653      0.509     -3.074      0.002      -2.564      -0.566
+union          1.0960      0.506      2.166      0.031       0.103       2.089
+education      1.3703      0.066     20.792      0.000       1.241       1.500
+exper          0.1666      0.016     10.382      0.000       0.135       0.198
+==============================================================================
+Omnibus:                      525.319   Durbin-Watson:                   1.898
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3519.893
+Skew:                           1.747   Prob(JB):                         0.00
+Kurtosis:                      10.303   Cond. No.                         141.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

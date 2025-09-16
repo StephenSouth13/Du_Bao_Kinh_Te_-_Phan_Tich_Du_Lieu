@@ -1,0 +1,1 @@
+{'p': np.float64(0.3573560189663587), 'marginal_effects': {'age': np.float64(-0.00981651221976243), 'edu': np.float64(-0.015915152656864606), 'income': np.float64(1.970946184037814e-05), 'pcigs79': np.float64(-0.005022336896365331), 'ageedu': np.float64(0.0004940646447515462), 'educincome': np.float64(-1.5637435790694096e-06)}}

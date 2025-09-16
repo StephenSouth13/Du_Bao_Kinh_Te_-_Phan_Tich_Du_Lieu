@@ -1,0 +1,29 @@
+2025-09-16 17:53:54,862 - INFO - Starting bai tap 1 pipeline
+2025-09-16 17:53:54,862 - INFO - Loading Table1_1 data from Table1_1.dta
+2025-09-16 17:53:54,866 - INFO - Data loaded: 1289 rows, 17 columns
+2025-09-16 17:53:54,878 - INFO - 1) Describe the dataset (info + dtypes + head)
+2025-09-16 17:53:54,882 - INFO - 2) Summary statistics
+2025-09-16 17:53:54,906 - INFO - 3) Mean wage by female
+2025-09-16 17:53:54,911 - INFO - 4) Mean wage by female and nonwhite
+2025-09-16 17:53:54,916 - INFO - 5) Crosstab female x nonwhite (counts + row% + col% + total%)
+2025-09-16 17:53:54,937 - INFO - 6) Histogram wage and lnwage
+2025-09-16 17:53:55,736 - INFO - 7) Scatter wage vs education
+2025-09-16 17:53:56,622 - INFO - 8) t-test wage by female
+2025-09-16 17:53:56,626 - INFO - 9) ANOVA across age groups
+2025-09-16 17:53:56,632 - INFO - 10) OLS regression: wage ~ female + nonwhite + union + education + exper
+2025-09-16 17:53:56,663 - INFO - 11) Predict fitted values and residuals
+2025-09-16 17:53:56,968 - INFO - 12) Joint F-test for all regressors excluded
+2025-09-16 17:53:56,970 - INFO - 13) VIF and Breusch-Pagan
+2025-09-16 17:53:56,981 - INFO - Loading Table8_1 data from Table8_1.dta
+2025-09-16 17:53:56,983 - INFO - Data2 loaded: 1196 rows, 7 columns
+2025-09-16 17:53:56,989 - INFO - 14) Frequency table for smoker
+2025-09-16 17:53:56,993 - INFO - 15) Logit: smoker ~ age + edu + income + pcigs79 + ageedu + educincome
+2025-09-16 17:53:57,014 - INFO - 16) Predict probability for each respondent
+2025-09-16 17:53:57,023 - INFO - 17) Marginal effects at means (logit)
+2025-09-16 17:53:57,030 - INFO - 18) Marginal effects at specific point (age=63, edu=10, income=20000, pcigs79=60)
+2025-09-16 17:53:57,032 - INFO - 19) Probit model
+2025-09-16 17:53:57,062 - INFO - 20) Compare logit vs probit
+2025-09-16 17:53:57,067 - INFO - Creating a polished Word report at output\reports
+2025-09-16 17:53:57,165 - INFO - Report saved to output\reports\report.docx
+2025-09-16 17:53:57,165 - INFO - All done. Outputs are in the folder: output
+2025-09-16 17:53:57,165 - INFO - Log file saved to output\logs\baitap1_python_20250916_175354.log

@@ -1,0 +1,1 @@
+t-statistic=8.22717, p-value=4.78431e-16, n_male=648, n_female=641
