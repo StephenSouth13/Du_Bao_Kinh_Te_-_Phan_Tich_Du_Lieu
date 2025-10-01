@@ -1,43 +1,110 @@
-### BUỔI 7
-Tình huống EFA, Cronbach’s Apha, Regression [với SPSS] – đơn giản
+# 📘 BUỔI 7  
+**Tình huống: EFA, Cronbach’s Alpha, Regression (với SPSS) – phiên bản đơn giản**  
+👨‍🏫 Giảng viên: **Thầy Nguyễn Khánh Duy**
 
-- Thầy Nguyễn Khánh Duy
+---
 
-Link youtube (Phần 1): 
-- Làm sao giữ chân những nhân sự có kĩ năng chuyên môn cao.Chủ đề là giải thích gắn kết nhân viên đến tổ chức.
-- Lấy ví dụ từ nghiên cứu : Đo lường mức độ thỏa mãn đối với công việc trong điều kiện của Việt Nam (Cô Trần Kim Dung - 2005)
+## 🎥 Tài liệu tham khảo
+- **Link Youtube (Phần 1)**  
+  Chủ đề: *Làm sao giữ chân những nhân sự có kỹ năng chuyên môn cao?*  
+  → Giải thích mối quan hệ **gắn kết nhân viên với tổ chức**.  
 
-- Bản chất công việc - Tiền lương - Lãnh đạo - 
+  Ví dụ nghiên cứu:  
+  - *Đo lường mức độ thỏa mãn đối với công việc trong điều kiện Việt Nam*  
+    (Trần Kim Dung, 2005).  
 
-- Do các biến khách quan - chủ quan trong nghiên cứu (Thông qua chỉ số)
+- **Link Youtube (Phần 2)**  
+  Chủ đề: *Giá trị nội dung, phân biệt, hội tụ, và phân tích hồi quy trong nghiên cứu*.  
 
-- Ví dụ về do khái niệm trung thành: Độ hài lòng - Mức lương - Lãnh đạo - Văn hóa công ty - Sự tương tác đồng nghiệp - Môi trường - Khả năng phát triển.Khi khảo sát cần xếp theo thứ tự để có sự trả lời chính xác nhất.
+---
 
-- Thang đo trong kê: Định danh - Thứ bậc - Khoảng - ...
+## 📝 Nội dung chính
 
-- Quy ước trong câu hỏi ==> Thang đo thứ bậc 
+### 1. Các nhân tố ảnh hưởng trong nghiên cứu
+- **Bản chất công việc**  
+- **Tiền lương**  
+- **Lãnh đạo**  
+- **Văn hóa công ty**  
+- **Đồng nghiệp & sự tương tác**  
+- **Môi trường làm việc**  
+- **Cơ hội phát triển**
 
-- Phần thang đo sắp xếp có tính tương xứng,biến định lượng.Ví dụ: giá cổ phiếu,diện tích căn nhà
+👉 Đây là các yếu tố quan trọng để lý giải khái niệm **sự trung thành** của nhân viên đối với tổ chức.
 
-- Đọc thêm" Phương pháp nghiên cứu kinh doanh - Thầy Nguyễn Đình Thọ
-.Tham khảo thêm ở Thầy Nguyễn Văn Thắng.
+---
 
-- Quay lại thang đo để dùng biến số đo về đồng nghiệp và lãnh đạo.
+### 2. Cấu trúc nghiên cứu
+- Nghiên cứu dựa trên các **biến khách quan** và **biến chủ quan** (thông qua chỉ số đo lường).  
+- Khi khảo sát → cần **xếp các yếu tố theo thứ tự hợp lý** để thu được câu trả lời chính xác.  
 
-- Trường hợp đa cộng tuyến
+---
 
+### 3. Hệ thống thang đo
+- **Loại thang đo** thường gặp trong nghiên cứu:  
+  - Định danh (Nominal)  
+  - Thứ bậc (Ordinal)  
+  - Khoảng (Interval)  
+  - Tỷ lệ (Ratio)
 
-Link youtube (Phần 2): 
-- Giá trị nội dung: dựa vào lý thuyết,nghiên cứu thực nghiệm trước,điều chỉnh thang đo bằng phương pháp định tính.
+- **Quy ước trong câu hỏi khảo sát** → thường sử dụng thang đo **thứ bậc**.  
+- Các biến định lượng có thể áp dụng trực tiếp, ví dụ:  
+  - Giá cổ phiếu  
+  - Diện tích căn nhà  
 
-- Giá trị phân biệt: EFA
-- Gía trị hội tụ: EFA
+📖 **Tài liệu tham khảo**:  
+- *Phương pháp nghiên cứu kinh doanh* – Nguyễn Đình Thọ  
+- Bài giảng của Thầy Nguyễn Văn Thắng  
 
-* Thực hiện phần tích hồi quy.
+---
 
-- Xây dựng lý thuyết từ thực địa
+### 4. Một số vấn đề cần lưu ý
+- **Đa cộng tuyến (Multicollinearity)** trong hồi quy → cần kiểm tra để tránh sai lệch kết quả.  
+- Khi xây dựng bảng câu hỏi:  
+  - Phải **phân biệt rõ khái niệm** để đảm bảo giá trị đo lường.  
+  - Ví dụ: *Tính nhân văn* ≠ *Lòng trắc ẩn*.  
+  - Nếu nhập nhằng → dễ dẫn tới sai số liệu từ **khảo sát / đánh giá / bảng hỏi**.  
 
-- Cần phân biệt rõ ra những khái niệm khi xây dựng bảng câu hỏi để lấy giá trị ví dụ Tính Nhân văn và Lòng trắc ẩn ==> Cần hiểu vấn đề đây là tránh xảy ra sai số liệu từ bảng câu hỏi/đánh giá/khảo sát,...
+---
 
-1.Câu hỏi quản lý:
-- Có phải lãnh đạo ảnh hưởng đến lòng trung thành hay không ? (Câu hỏi nhân quả)
+### 5. Giá trị đo lường trong nghiên cứu
+- **Giá trị nội dung (Content Validity)**  
+  → Dựa vào lý thuyết + nghiên cứu thực nghiệm trước + điều chỉnh thang đo bằng phương pháp định tính.  
+
+- **Giá trị phân biệt (Discriminant Validity)**  
+  → Kiểm định qua **EFA (Exploratory Factor Analysis)**.  
+
+- **Giá trị hội tụ (Convergent Validity)**  
+  → Cũng được đánh giá thông qua **EFA**.  
+
+---
+
+### 6. Thực hiện phân tích hồi quy
+- Sau bước Cronbach’s Alpha và EFA → tiến hành hồi quy để kiểm định giả thuyết.  
+- Quy trình:  
+  1. Xác định câu hỏi nghiên cứu.  
+  2. Kiểm định thang đo (Reliability & Validity).  
+  3. Phân tích nhân tố (EFA).  
+  4. Chạy hồi quy đa biến để tìm mối quan hệ nhân quả.  
+
+---
+
+## ❓ Câu hỏi quản lý & mục tiêu nghiên cứu
+- **Câu hỏi quản lý**:  
+  - Có phải **lãnh đạo ảnh hưởng đến lòng trung thành** của nhân viên hay không?  
+  - Đây là câu hỏi mang tính **nhân quả**.  
+
+- **Mục đích nghiên cứu khoa học**:  
+  - Tạo ra tri thức mới.  
+  - Góp phần phát triển, đổi mới sáng tạo.  
+
+- **Tiêu chí quan trọng**:  
+  - Thang đo (độ tin cậy, giá trị).  
+  - Tính phù hợp của mô hình.  
+
+---
+
+## 📌 Tổng kết
+- Hiểu rõ **vai trò thang đo** trong nghiên cứu định lượng.  
+- Đảm bảo **độ tin cậy (Cronbach’s Alpha)** và **giá trị (EFA, hội tụ, phân biệt)** trước khi chạy hồi quy.  
+- Cần có **câu hỏi quản lý rõ ràng** và **mục tiêu khoa học cụ thể**.  
+- Luôn phân biệt rạch ròi các khái niệm để tránh sai số khảo sát.  
