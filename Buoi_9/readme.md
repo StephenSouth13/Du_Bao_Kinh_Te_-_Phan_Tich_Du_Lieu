@@ -203,3 +203,5 @@ F: tập các nhân tố tiềm ẩn (Factor1–Factor6)
 
 𝜀
 ε: sai số
+
+![alt text](image.png)
