@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                margin: 0 auto;
+                 width: 100%;
+                 height: 850px;
+                 background-color: #FFFFFF;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#FFB84C", "font": {"color": "black"}, "id": "Factor1", "label": "Factor1", "shape": "ellipse", "size": 45, "title": "\u003cb\u003eLatent Variable:\u003c/b\u003e Factor1"}, {"color": "#FFB84C", "font": {"color": "black"}, "id": "Factor2", "label": "Factor2", "shape": "ellipse", "size": 45, "title": "\u003cb\u003eLatent Variable:\u003c/b\u003e Factor2"}, {"color": "#FFB84C", "font": {"color": "black"}, "id": "Factor3", "label": "Factor3", "shape": "ellipse", "size": 45, "title": "\u003cb\u003eLatent Variable:\u003c/b\u003e Factor3"}, {"color": "#FFB84C", "font": {"color": "black"}, "id": "Factor4", "label": "Factor4", "shape": "ellipse", "size": 45, "title": "\u003cb\u003eLatent Variable:\u003c/b\u003e Factor4"}, {"color": "#FFB84C", "font": {"color": "black"}, "id": "Factor5", "label": "Factor5", "shape": "ellipse", "size": 45, "title": "\u003cb\u003eLatent Variable:\u003c/b\u003e Factor5"}, {"color": "#FFB84C", "font": {"color": "black"}, "id": "Factor6", "label": "Factor6", "shape": "ellipse", "size": 45, "title": "\u003cb\u003eLatent Variable:\u003c/b\u003e Factor6"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e1", "label": "e1", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e1"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e2", "label": "e2", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e2"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e3", "label": "e3", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e3"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e4", "label": "e4", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e4"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e5", "label": "e5", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e5"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e6", "label": "e6", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e6"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e7", "label": "e7", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e7"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e8", "label": "e8", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e8"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e9", "label": "e9", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e9"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e10", "label": "e10", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e10"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e11", "label": "e11", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e11"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "e12", "label": "e12", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e e12"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c1", "label": "c1", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c1"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c2", "label": "c2", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c2"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c3", "label": "c3", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c3"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c4", "label": "c4", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c4"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c5", "label": "c5", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c5"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c6", "label": "c6", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c6"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c7", "label": "c7", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c7"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c8", "label": "c8", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c8"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c9", "label": "c9", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c9"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c10", "label": "c10", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c10"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c11", "label": "c11", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c11"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c12", "label": "c12", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c12"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c13", "label": "c13", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c13"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c14", "label": "c14", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c14"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c15", "label": "c15", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c15"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c16", "label": "c16", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c16"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c17", "label": "c17", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c17"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "c18", "label": "c18", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e c18"}, {"color": "#91D8E4", "font": {"color": "black"}, "id": "gender", "label": "gender", "shape": "box", "size": 30, "title": "\u003cb\u003eObserved Variable:\u003c/b\u003e gender"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#555555", "from": "Factor2", "title": "\u003cb\u003eFactor2 \u2192 e2\u003c/b\u003e\u003cbr\u003eEstimate: 0.37", "to": "e2", "value": 0.373, "width": 4.865}, {"arrows": "to", "color": "#555555", "from": "Factor4", "title": "\u003cb\u003eFactor4 \u2192 e3\u003c/b\u003e\u003cbr\u003eEstimate: 0.38", "to": "e3", "value": 0.378, "width": 4.890000000000001}, {"arrows": "to", "color": "#AA0000", "from": "Factor3", "title": "\u003cb\u003eFactor3 \u2192 e4\u003c/b\u003e\u003cbr\u003eEstimate: -0.34", "to": "e4", "value": 0.337, "width": 4.6850000000000005}, {"arrows": "to", "color": "#555555", "from": "Factor5", "title": "\u003cb\u003eFactor5 \u2192 e4\u003c/b\u003e\u003cbr\u003eEstimate: 0.27", "to": "e4", "value": 0.269, "width": 4.345000000000001}, {"arrows": "to", "color": "#555555", "from": "Factor2", "title": "\u003cb\u003eFactor2 \u2192 e6\u003c/b\u003e\u003cbr\u003eEstimate: 0.30", "to": "e6", "value": 0.303, "width": 4.515}, {"arrows": "to", "color": "#555555", "from": "Factor4", "title": "\u003cb\u003eFactor4 \u2192 e8\u003c/b\u003e\u003cbr\u003eEstimate: 0.26", "to": "e8", "value": 0.263, "width": 4.3149999999999995}, {"arrows": "to", "color": "#555555", "from": "Factor2", "title": "\u003cb\u003eFactor2 \u2192 e10\u003c/b\u003e\u003cbr\u003eEstimate: 0.28", "to": "e10", "value": 0.275, "width": 4.375}, {"arrows": "to", "color": "#555555", "from": "Factor6", "title": "\u003cb\u003eFactor6 \u2192 e10\u003c/b\u003e\u003cbr\u003eEstimate: 0.40", "to": "e10", "value": 0.402, "width": 5.01}, {"arrows": "to", "color": "#555555", "from": "Factor4", "title": "\u003cb\u003eFactor4 \u2192 e12\u003c/b\u003e\u003cbr\u003eEstimate: 0.42", "to": "e12", "value": 0.42, "width": 5.1}, {"arrows": "to", "color": "#555555", "from": "Factor3", "title": "\u003cb\u003eFactor3 \u2192 c1\u003c/b\u003e\u003cbr\u003eEstimate: 0.32", "to": "c1", "value": 0.318, "width": 4.59}, {"arrows": "to", "color": "#AA0000", "from": "Factor6", "title": "\u003cb\u003eFactor6 \u2192 c3\u003c/b\u003e\u003cbr\u003eEstimate: -0.31", "to": "c3", "value": 0.311, "width": 4.555}, {"arrows": "to", "color": "#AA0000", "from": "Factor6", "title": "\u003cb\u003eFactor6 \u2192 c4\u003c/b\u003e\u003cbr\u003eEstimate: -0.25", "to": "c4", "value": 0.254, "width": 4.27}, {"arrows": "to", "color": "#AA0000", "from": "Factor5", "title": "\u003cb\u003eFactor5 \u2192 c6\u003c/b\u003e\u003cbr\u003eEstimate: -0.32", "to": "c6", "value": 0.316, "width": 4.58}, {"arrows": "to", "color": "#555555", "from": "Factor3", "title": "\u003cb\u003eFactor3 \u2192 c7\u003c/b\u003e\u003cbr\u003eEstimate: 0.30", "to": "c7", "value": 0.297, "width": 4.484999999999999}, {"arrows": "to", "color": "#AA0000", "from": "Factor6", "title": "\u003cb\u003eFactor6 \u2192 c9\u003c/b\u003e\u003cbr\u003eEstimate: -0.37", "to": "c9", "value": 0.371, "width": 4.855}, {"arrows": "to", "color": "#555555", "from": "Factor3", "title": "\u003cb\u003eFactor3 \u2192 c13\u003c/b\u003e\u003cbr\u003eEstimate: 0.35", "to": "c13", "value": 0.354, "width": 4.77}, {"arrows": "to", "color": "#555555", "from": "Factor5", "title": "\u003cb\u003eFactor5 \u2192 c15\u003c/b\u003e\u003cbr\u003eEstimate: 0.26", "to": "c15", "value": 0.264, "width": 4.32}, {"arrows": "to", "color": "#AA0000", "from": "Factor6", "title": "\u003cb\u003eFactor6 \u2192 c15\u003c/b\u003e\u003cbr\u003eEstimate: -0.26", "to": "c15", "value": 0.258, "width": 4.29}, {"arrows": "to", "color": "#555555", "from": "Factor5", "title": "\u003cb\u003eFactor5 \u2192 gender\u003c/b\u003e\u003cbr\u003eEstimate: 0.54", "to": "gender", "value": 0.538, "width": 5.69}, {"arrows": "to", "color": "#888888", "from": "Factor1", "title": "\u003cb\u003eFactor1 \u2192 Factor2\u003c/b\u003e", "to": "Factor2", "width": 2}, {"arrows": "to", "color": "#888888", "from": "Factor2", "title": "\u003cb\u003eFactor2 \u2192 Factor3\u003c/b\u003e", "to": "Factor3", "width": 2}, {"arrows": "to", "color": "#888888", "from": "Factor3", "title": "\u003cb\u003eFactor3 \u2192 Factor4\u003c/b\u003e", "to": "Factor4", "width": 2}, {"arrows": "to", "color": "#888888", "from": "Factor4", "title": "\u003cb\u003eFactor4 \u2192 Factor5\u003c/b\u003e", "to": "Factor5", "width": 2}, {"arrows": "to", "color": "#888888", "from": "Factor5", "title": "\u003cb\u003eFactor5 \u2192 Factor6\u003c/b\u003e", "to": "Factor6", "width": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"font": {"size": 18, "face": "Arial"}, "borderWidth": 2, "shadow": true}, "edges": {"color": {"inherit": false}, "smooth": {"type": "cubicBezier"}, "arrows": {"to": {"enabled": true, "scaleFactor": 1.2}}, "shadow": true}, "physics": {"stabilization": true, "barnesHut": {"gravitationalConstant": -3500}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
