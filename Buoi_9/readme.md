@@ -48,3 +48,12 @@ Chạy PCA hoặc Factor Analysis
 Vẽ biểu đồ scree plot + heatmap
 
 Gợi ý nhóm yếu tố (ví dụ: “Ủng hộ đạo đức”, “Phản đối tôn giáo”, …)
+| Thành phần                             | Kết quả                                                                                                                                                                 |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Số quan sát (rows)**                 | 357                                                                                                                                                                     |
+| **Số biến Likert (columns)**           | 31                                                                                                                                                                      |
+| **Số nhân tố có Eigenvalue > 1**       | **6 nhân tố**                                                                                                                                                           |
+| **Biểu đồ Scree Plot**                 | Lưu tại `./charts/scree_plot.png`                                                                                                                                       |
+| **Heatmap tương quan**                 | Lưu tại `./charts/correlation_heatmap.png`                                                                                                                              |
+| **Bảng tải nhân tố (Factor Loadings)** | Xuất ra file Excel `euthan_factor_loadings.xlsx`                                                                                                                        |
+| **Gợi ý nhóm nhân tố**                 | - Factor1: nhóm biến e1–e5 → “Ủng hộ đạo đức”<br> - Factor2: nhóm e20–e25 → “Phản đối tôn giáo”<br> - (Các nhóm khác có thể đọc từ Excel để đặt tên theo tải mạnh nhất) |
