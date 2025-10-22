@@ -77,4 +77,3 @@ print(f"- Scree Plot lưu trong './charts/scree_plot.png' giúp bạn xác đị
 print(f"- Heatmap tương quan giữa 31 biến lưu trong './charts/correlation_heatmap.png'.")
 print("\n📂 File tải nhân tố đã được lưu: euthan_factor_loadings.xlsx")
 print("🎯 Phân tích nhân tố hoàn tất!")
-
